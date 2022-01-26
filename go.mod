@@ -1,3 +1,3 @@
-module go_performance
+module go-performance
 
 go 1.17
