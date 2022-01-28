@@ -55,7 +55,7 @@ func BenchmarkFibResetTimer(b *testing.B) {
 	}
 }
 
-func BenchmarkFibUseStartAndEndTimer(b *testing.B) {
+/*func BenchmarkFibUseStartAndEndTimer(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
@@ -63,4 +63,4 @@ func BenchmarkFibUseStartAndEndTimer(b *testing.B) {
 		b.StartTimer()
 		Fib(30)
 	}
-}
+}*/
