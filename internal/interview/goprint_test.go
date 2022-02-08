@@ -13,4 +13,7 @@ func Test(t *testing.T) {
 	fmt.Println(strings.Count(str, ""))
 	fmt.Println(str[1 : 1+1])
 	fmt.Println(strings.Count(str, ""))
+
+	str2 := "abc"
+	fmt.Println(strings.LastIndex(str2, "c"))
 }
