@@ -222,3 +222,50 @@ func writerAtExample() {
 	}
 	fmt.Println(n)
 }
+
+// ByteReader 接口包装了基本的 ReadByte 方法，用于从自身读出一个字节。返回读出的字节和遇到的错误。
+// type ByteReader interface {
+//    ReadByte() (c byte, err error)
+//}
+// 这组接口在标准库中也有实现
+// bufio.Reader/Writer 分别实现了io.ByteReader 和 io.ByteWriter
+// bytes.Buffer 同时实现了 io.ByteReader 和 io.ByteWriter
+// bytes.Reader 实现了 io.ByteReader
+// strings.Reader 实现了 io.ByteReader
+
+func byteReaderExample() {
+	var ch byte
+	fmt.Scanf("%c", &ch)
+
+	buffer := new(bytes.Buffer)
+	err := buffer.WriteByte(ch)
+	if err == nil {
+		fmt.Println("写入第一个字节成功！开始读取改字节")
+		newch, _ := buffer.ReadByte()
+		fmt.Printf("读取的字节：%c\n", newch)
+	} else {
+		fmt.Println("写入错误")
+	}
+}
+
+// ByteScanner 在 ByteReader 的基础上增加了一个 UnreadByte 方法，
+//用于撤消最后一次的 ReadByte 操作，以便下次的 ReadByte 操作可以读出与前一次一样的数据。
+//UnreadByte 之前必须是 ReadByte 才能撤消成功，否则可能会返回一个错误信息
+//（根据不同的需求，UnreadByte 也可能返回 nil，允许随意调用 UnreadByte，但只有最后一次的 ReadByte 可以被撤销，其它 UnreadByte 不执行任何操作）。
+// type ByteScanner interface {
+//    ByteReader
+//    UnreadByte() error
+//}
+
+//RuneReader 接口包装了基本的 ReadRune 方法，用于从自身读取一个 UTF-8 编码的字符到 r 中。返回读取的字符、字符的编码长度和遇到的错误。
+// type RuneReader interface {
+//    ReadRune() (r rune, size int, err error)
+//}
+//RuneScanner 在 RuneReader 的基础上增加了一个 UnreadRune 方法，用于撤消最后一次的 ReadRune 操作，以便下次的 ReadRune 操作可以读出与前一次一样的数据。UnreadRune
+//之前必须是 ReadRune 才能撤消成功，否则可能会返回一个错误信息（根据不同的需求，UnreadRune 也可能返回 nil，允许随意调用 UnreadRune，但只有最后一次的 ReadRune
+//可以被撤销，其它 UnreadRune 不执行任何操作）。
+
+/*type RuneScanner interface {
+	RuneReader
+	UnreadRune() error
+}*/

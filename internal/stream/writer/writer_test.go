@@ -21,3 +21,7 @@ func Test_readAtExample(t *testing.T) {
 func Test_writerAtExample(t *testing.T) {
 	writerAtExample()
 }
+
+func Test_byteReaderExample(t *testing.T) {
+	byteReaderExample()
+}
