@@ -11,3 +11,7 @@ func Test_funcExample(t *testing.T) {
 func Test_examples(t *testing.T) {
 	examples()
 }
+
+func Test_copyExample(t *testing.T) {
+	copyExample()
+}
