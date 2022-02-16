@@ -96,5 +96,6 @@ func testInterceptor2() {
 
 func main() {
 	//testInterceptor()
-	testInterceptor2()
+	//testInterceptor2()
+	testMyInterceptor()
 }

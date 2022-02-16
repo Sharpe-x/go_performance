@@ -27,7 +27,7 @@ func chainUnaryInterceptor(interceptors ...myInterceptor) myInterceptor {
 	}
 }
 
-func main() {
+func testMyInterceptor() {
 	pHandler := func(ctx context.Context, str string) error {
 		fmt.Println(str)
 		return nil
