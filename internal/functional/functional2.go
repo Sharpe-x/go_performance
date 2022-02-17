@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func a(str string) string {
 	fmt.Println("a_" + str)
@@ -38,7 +40,7 @@ func aaFunc(strIn string, fn func(s string) string) (strOut string) {
 	return strOut
 }
 
-/*func bbFunc(strIn string, fn func(s string) string) (strOut string) {
+func bbFunc(strIn string, fn func(s string) string) (strOut string) {
 	fmt.Println("bbFunc start")
 	strOut = fn(strIn)
 	fmt.Println("bbFunc end")
@@ -50,7 +52,7 @@ func ccFunc(strIn string, fn func(s string) string) (strOut string) {
 	strOut = fn(strIn)
 	fmt.Println("ccFunc end")
 	return strOut
-}*/
+}
 
 func main() {
 	print(a(b(c("word"))))
@@ -68,8 +70,11 @@ func main() {
 			return interceptor(strIn, handler)
 		}
 	}
+	fmt.Println("=========")
 
-	chainerHandler := chainer(aaFunc, a)
+	//chainer(aaFunc, chainer(bbFunc, chainer(ccFunc, a)))
+	chainerHandler := chainer(aaFunc, chainer(bbFunc, chainer(ccFunc, a)))
+
 	chainerHandler("word")
 
 }
