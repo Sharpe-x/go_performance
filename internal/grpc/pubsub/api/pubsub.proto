@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package api;
+
+service PubSubService {
+  rpc Publish (String) returns (String);
+  rpc Subscribe (String) returns (stream String);//服务端单向流
+}
+
+message String{
+  string value = 1;
+}
