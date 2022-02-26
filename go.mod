@@ -3,6 +3,7 @@ module go-performance
 go 1.17
 
 require (
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/docker/docker v20.10.12+incompatible
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
