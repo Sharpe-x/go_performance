@@ -62,6 +62,18 @@ func main() {
 	//  Recover 必须在defer 函数中运
 	fmt.Println(If(2 > 3, "hello", "hi").(string))
 
+	//  := 表示声明并赋值，= 表示仅赋值。
+	//变 量的作用域是大括号，因此在第一个 if 语句 if err == nil 内部重新声明且赋值了与外部变量同名的局部变量 err。对该局部变量的赋值不会影响到外部的 err。因此第二个 if 语句 if err
+	//!= nil 不成立。所以只打印了 1 err。
+	var err error
+	if err == nil {
+		err := fmt.Errorf("err") // 内部重新声明且赋值了与外部变量同名的局部变量 err。对该局部变量的赋值不会影响到外部的 err。
+		fmt.Println(1, err)
+	}
+	if err != nil {
+		fmt.Println(2, err)
+	}
+
 }
 
 /*func Foo() (err error) {
