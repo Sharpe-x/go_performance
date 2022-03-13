@@ -108,6 +108,33 @@ func mySwapPairs(head *ListNode) *ListNode {
 	return dummyHead.Next
 }
 
+func reverseGroupByK(head *ListNode, k int) *ListNode {
+	dummy := &ListNode{
+		Next: head,
+	}
+
+	pre := dummy
+	cur := head
+	length := 0
+	for head != nil {
+		length++
+		head = head.Next
+	}
+
+	head = dummy.Next
+	for i := 0; i < length/k; i++ {
+		for j := 0; j < k-1; j++ {
+			tmp := cur.Next
+			cur.Next = tmp.Next
+			tmp.Next = pre.Next
+			pre.Next = tmp
+		}
+		pre = cur
+		cur = pre.Next
+	}
+	return dummy.Next
+}
+
 func main() {
 
 	arr := []int{1, 2, 3, 4, 5}
@@ -133,4 +160,8 @@ func main() {
 	arr = []int{1, 2, 3, 4, 5, 6, 7}
 	head = createList(arr)
 	printList(mySwapPairs(head))
+
+	arr = []int{1, 2, 3, 4, 5, 6, 7, 8}
+	bHead := createList(arr)
+	printList(reverseGroupByK(bHead, 3))
 }
