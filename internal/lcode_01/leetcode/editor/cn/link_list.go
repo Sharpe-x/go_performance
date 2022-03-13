@@ -124,10 +124,10 @@ func reverseGroupByK(head *ListNode, k int) *ListNode {
 	head = dummy.Next
 	for i := 0; i < length/k; i++ {
 		for j := 0; j < k-1; j++ {
-			tmp := cur.Next
-			cur.Next = tmp.Next
-			tmp.Next = pre.Next
-			pre.Next = tmp
+			next := cur.Next
+			cur.Next = next.Next
+			next.Next = pre.Next
+			pre.Next = next
 		}
 		pre = cur
 		cur = pre.Next
