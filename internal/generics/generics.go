@@ -20,7 +20,7 @@ func SumFloats(m map[string]float64) float64 {
 	return s
 }
 
-func SumNumbers[K comparable, V int64 | float64](m map[K]V) V {
+/*func SumNumbers[K comparable, V int64 | float64](m map[K]V) V {
 	var s V
 	for _, v := range m {
 		s += v
@@ -39,7 +39,7 @@ func SumNumberByInterface[K comparable, V Number](m map[K]V) V {
 		s += v
 	}
 	return s
-}
+}*/
 
 func main() {
 	ints := map[string]int64{
@@ -55,10 +55,10 @@ func main() {
 	}
 
 	fmt.Println(SumInts(ints), SumFloats(floats))
-	fmt.Println(SumNumbers[string, int64](ints))
+	/*	fmt.Println(SumNumbers[string, int64](ints))
 
-	fmt.Println(SumNumbers(floats))
+		fmt.Println(SumNumbers(floats))
 
-	fmt.Println(SumNumberByInterface(ints))
+		fmt.Println(SumNumberByInterface(ints))*/
 
 }
