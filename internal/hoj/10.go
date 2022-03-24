@@ -2,35 +2,27 @@ package main
 
 import "fmt"
 
-/*描述
-输入一个 int 型整数，按照从右向左的阅读顺序，返回一个不含重复数字的新的整数。
-保证输入的整数最后一位不是 0 。
+/*编写一个函数，计算字符串中含有的不同字符的个数。字符在 ASCII 码范围内( 0~127 ，包括 0 和 127 )，换行表示结束符，不算在字符里。不在范围内的不作统计。多个相同的字符只计算一次
+例如，对于字符串 abaca 而言，有 a、b、c 三种不同的字符，因此输出 3 。
 
-数据范围： 1 \le n \le 10^{8} \1≤n≤10
-8
-
+数据范围： 1 \le n \le 500 \1≤n≤500
 输入描述：
-输入一个int型整数
+输入一行没有空格的字符串。
 
 输出描述：
-按照从右向左的阅读顺序，返回一个不含重复数字的新的整数*/
+输出 输入字符串 中范围在(0~127，包括0和127)字符的种数。
+
+*/
 
 func main() {
-	var num int
-	_, err := fmt.Scanf("%d", &num)
+	var str string
+	_, err := fmt.Scanf("%s\n", &str)
 	if err != nil {
 		return
 	}
-
-	m := make(map[int]bool)
-	res := 0
-	for num > 0 {
-		temp := num % 10
-		if m[temp] == false {
-			res = res*10 + temp
-			m[temp] = true
-		}
-		num = num / 10
+	m := make(map[int32]struct{})
+	for _, b := range str {
+		m[b] = struct{}{}
 	}
-	fmt.Println(res)
+	fmt.Println(len(m))
 }
