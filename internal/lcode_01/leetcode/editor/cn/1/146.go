@@ -49,54 +49,62 @@
 // 0 <= value <= 10⁵
 // 最多调用 2 * 10⁵ 次 get 和 put
 //
-// Related Topics 设计 哈希表 链表 双向链表 👍 2057 👎 0
+// Related Topics 设计 哈希表 链表 双向链表 👍 1987 👎 0
+
 package main
 
-import "container/list"
+import (
+	"container/list"
+	"fmt"
+)
 
 //leetcode submit region begin(Prohibit modification and deletion)
 type LRUCache struct {
-	list     *list.List
-	keys     map[int]*list.Element
 	capacity int
+	list     *list.List
+	KeyMaps  map[int]*list.Element
 }
 
 type entry struct {
-	key, value int
+	key, val int
 }
 
 func Constructor(capacity int) LRUCache {
 	return LRUCache{
 		list:     list.New(),
-		keys:     make(map[int]*list.Element, capacity),
 		capacity: capacity,
+		KeyMaps:  make(map[int]*list.Element),
 	}
 }
 
 func (this *LRUCache) Get(key int) int {
-	if elem, ok := this.keys[key]; ok {
-		this.list.MoveToBack(elem)
-		return elem.Value.(*entry).value
+	if elem, ok := this.KeyMaps[key]; ok {
+		this.list.MoveToFront(elem)
+		return elem.Value.(*entry).val
 	}
 	return -1
 }
 
 func (this *LRUCache) Put(key int, value int) {
-
-	if elem, ok := this.keys[key]; !ok {
-		this.keys[key] = this.list.PushBack(&entry{
-			key:   key,
-			value: value,
-		})
+	if elem, ok := this.KeyMaps[key]; ok {
+		// update value
+		elem.Value.(*entry).val = value
+		// 移到队头
+		this.list.MoveToFront(elem)
 	} else {
-		e := elem.Value.(*entry)
-		e.value = value
-		this.list.MoveToBack(elem)
+		et := this.list.PushFront(&entry{
+			key: key,
+			val: value,
+		})
+		this.KeyMaps[key] = et
 	}
 
-	if this.list.Len() > this.capacity {
-		en := this.list.Remove(this.list.Front())
-		delete(this.keys, en.(*entry).key)
+	// 如果大于capacity 删除尾部
+	if len(this.KeyMaps) > this.capacity {
+		et := this.list.Back()
+		fmt.Println("delete ", et.Value.(*entry).key)
+		delete(this.KeyMaps, et.Value.(*entry).key)
+		this.list.Remove(et)
 	}
 }
 
@@ -107,3 +115,17 @@ func (this *LRUCache) Put(key int, value int) {
  * obj.Put(key,value);
  */
 //leetcode submit region end(Prohibit modification and deletion)
+
+func main() {
+	lru := Constructor(2)
+	//fmt.Println(lru.Get(1))
+	lru.Put(1, 1)
+	lru.Put(2, 2)
+	fmt.Println(lru.Get(1))
+	lru.Put(3, 3)
+	//	fmt.Println(lru.Get(2))
+	lru.Put(4, 4)
+	/*	fmt.Println(lru.Get(1))
+		fmt.Println(lru.Get(3))
+		fmt.Println(lru.Get(4))*/
+}
