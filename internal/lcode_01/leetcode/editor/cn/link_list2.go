@@ -78,6 +78,32 @@ func listSwapPairs(head *Node) *Node {
 	return dummyHead.Next
 }
 
+func reverseListRecByK(head *Node, k int) *Node {
+	dummyHead := &Node{
+		Val:  -1,
+		Next: head,
+	}
+	pre, cur := dummyHead, head
+	length := 0
+	for cur != nil {
+		length++
+		cur = cur.Next
+	}
+	cur = head
+
+	for i := 0; i < length/k; i++ {
+		for j := 1; j < k; j++ {
+			next := cur.Next
+			cur.Next = next.Next
+			next.Next = pre.Next
+			pre.Next = next
+		}
+		pre = cur
+		cur = pre.Next
+	}
+	return dummyHead.Next
+}
+
 func main() {
 	a := []int{1, 2, 3, 4, 5}
 	list := newList(a)
@@ -88,4 +114,9 @@ func main() {
 
 	/*rList := listReverse(list)
 	listPrint(rList)*/
+
+	b := []int{1, 2, 3, 4, 5}
+	bList := newList(b)
+	resList := reverseListRecByK(bList, 3)
+	listPrint(resList)
 }
