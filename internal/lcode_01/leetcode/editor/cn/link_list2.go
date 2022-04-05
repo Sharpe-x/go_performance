@@ -104,19 +104,52 @@ func reverseListRecByK(head *Node, k int) *Node {
 	return dummyHead.Next
 }
 
+func myReorderList(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+
+	var nodes []*Node
+	cur := head
+	for cur != nil {
+		nodes = append(nodes, cur)
+		cur = cur.Next
+	}
+
+	i, j := 0, len(nodes)-1
+	for i != j {
+		nodes[i].Next = nodes[j]
+		i++
+
+		if i != j {
+			nodes[j].Next = nodes[i]
+			j--
+		}
+	}
+
+	nodes[i].Next = nil
+	return head
+}
+
 func main() {
-	a := []int{1, 2, 3, 4, 5}
+	/*a := []int{1, 2, 3, 4, 5}
 	list := newList(a)
 	listPrint(list)
 
 	sList := listSwapPairs(list)
-	listPrint(sList)
+	listPrint(sList)*/
 
 	/*rList := listReverse(list)
 	listPrint(rList)*/
 
-	b := []int{1, 2, 3, 4, 5}
+	/*b := []int{1, 2, 3, 4, 5}
 	bList := newList(b)
 	resList := reverseListRecByK(bList, 3)
-	listPrint(resList)
+	listPrint(resList)*/
+
+	c := []int{1, 2, 3, 4, 5}
+	cList := newList(c)
+	listPrint(cList)
+	recorderList := myReorderList(cList)
+	listPrint(recorderList)
 }
