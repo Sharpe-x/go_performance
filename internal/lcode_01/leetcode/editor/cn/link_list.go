@@ -135,9 +135,34 @@ func reverseGroupByK(head *ListNode, k int) *ListNode {
 	return dummy.Next
 }
 
+func mydeleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	dummyHead := &ListNode{
+		Val:  -999,
+		Next: head,
+	}
+	cur := dummyHead
+
+	for cur.Next != nil && cur.Next.Next != nil {
+		if cur.Next.Val == cur.Next.Next.Val {
+			x := cur.Next.Val
+			for cur.Next != nil && cur.Next.Val == x {
+				cur.Next = cur.Next.Next
+			}
+		} else {
+			cur = cur.Next
+		}
+	}
+
+	return dummyHead.Next
+}
+
 func main() {
 
-	arr := []int{1, 2, 3, 4, 5}
+	/*arr := []int{1, 2, 3, 4, 5}
 	head := createList(arr)
 	printList(head)
 
@@ -163,5 +188,10 @@ func main() {
 
 	arr = []int{1, 2, 3, 4, 5, 6, 7, 8}
 	bHead := createList(arr)
-	printList(reverseGroupByK(bHead, 3))
+	printList(reverseGroupByK(bHead, 3))*/
+
+	arr := []int{1, 2, 3, 4, 5, 5, 6, 7, 8}
+	list := createList(arr)
+	dHead := deleteDuplicates(list)
+	printList(dHead)
 }
