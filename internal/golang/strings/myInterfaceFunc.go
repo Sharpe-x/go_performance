@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -114,10 +115,21 @@ channel = 'WEIXINAPP' and o.open_id in ('%s')) order by u.created_on desc limit 
 	fmt.Println(sql)
 
 	time.Sleep(time.Second * 3)
+	mydb := GetDbStruct()
+	if mydb == nil {
+		fmt.Println("mydb is nil")
+	}
+	//	fmt.Println(If(ans, "", mydb.otherFiled).(string))
+
+	testMarshal()
 }
 
 func GetInfoFromRedis(key string) string {
 	return "get source from redis" + " " + key
+}
+
+func GetDbStruct() *myDb {
+	return nil
 }
 
 type myDb struct {
@@ -127,4 +139,160 @@ type myDb struct {
 
 func (db *myDb) Get(key string) string {
 	return "get source from myDb" + " " + key
+}
+
+// If 三元表达式
+func If(condition bool, trueVal, falseVal interface{}) interface{} {
+	if condition {
+		return trueVal
+	}
+	return falseVal
+}
+
+// Statement 问卷段
+type Statement struct {
+	Title      string   `json:"title"`      //问卷段标题
+	IsRequired bool     `json:"isRequired"` // 是否必填
+	Fields     []*Field `json:"fields"`
+}
+
+// Field 问卷属性
+type Field struct {
+	ComponentIds   []string   `json:"componentIds"` // Field 键值
+	FillKey        string     `json:"fillKey"`
+	FrontComponent string     `json:"frontComponent"` // 控件类型
+	Label          string     `json:"label"`          //  Label 名称
+	Rules          []*Rule    `json:"rules"`          //
+	SensitiveWords bool       `json:"sensitiveWords"` // 是否做敏感词校验
+	Placeholder    string     `json:"placeholder"`    // 提示
+	Range          RangeGroup `json:"range"`          // 控件选项
+}
+
+type RangeGroup []RangeInterface
+
+type RangeInterface interface {
+	String()
+}
+
+func (*Range) String() {
+}
+
+type (
+
+	// Rule 规则
+	Rule struct {
+		Required bool   `json:"required"`
+		Msg      string `json:"msg"`
+	}
+
+	// Range 范围
+	Range struct {
+		Text  string `json:"text"`
+		Value string `json:"value"`
+	}
+
+	// Cascade 级联数据
+	Cascade struct {
+		Children []*Cascade `json:"Children"`
+		Name     string     `json:"name"`
+		Label    string     `json:"label"`
+	}
+)
+
+func (c *Cascade) String() {
+}
+
+var Cascades = []*Cascade{
+	{
+		Name:  "计算机",
+		Label: "jisuanji",
+		Children: []*Cascade{
+			{
+				Name:  "计算机",
+				Label: "jisuanji",
+			},
+		},
+	},
+}
+
+func testMarshal() {
+
+	var f, f1 RangeInterface
+	fs := make([]RangeInterface, 0, 2)
+	f = &Range{
+		Text:  "武汉",
+		Value: "wuhan",
+	}
+
+	f1 = &Range{
+		Text:  "北京",
+		Value: "beijing",
+	}
+
+	fs = append(fs, f)
+	fs = append(fs, f1)
+
+	//fs1 := make([]RangeInterface, 0, 2)
+	var c, c1 RangeInterface
+	c = &Cascade{
+		Name:  "计算机",
+		Label: "jisuanji",
+		Children: []*Cascade{
+			{
+				Name:     "软件",
+				Label:    "jisuanji",
+				Children: []*Cascade{},
+			},
+		},
+	}
+	c1 = &Cascade{
+		Name:  "医学",
+		Label: "jisuanji",
+		Children: []*Cascade{
+			{
+				Name:     "内科",
+				Label:    "jisuanji",
+				Children: []*Cascade{},
+			},
+		},
+	}
+
+	fs = append(fs, c)
+	fs = append(fs, c1)
+
+	forms := []*Statement{
+		{
+			Title:      "1",
+			IsRequired: false,
+			Fields: []*Field{
+				{
+					ComponentIds: []string{
+						"1",
+						"2",
+					},
+					Range: RangeGroup(fs),
+				},
+			},
+		},
+		{
+			Title:      "2",
+			IsRequired: false,
+			Fields: []*Field{
+				{
+					ComponentIds: []string{
+						"111",
+						"222",
+					},
+					Range: RangeGroup(fs),
+				},
+			},
+		},
+	}
+
+	data, err := json.Marshal(forms)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(data))
+
 }
