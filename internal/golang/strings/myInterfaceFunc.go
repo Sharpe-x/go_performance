@@ -168,13 +168,9 @@ type Field struct {
 	Range          RangeGroup `json:"range"`          // 控件选项
 }
 
-type RangeGroup []RangeInterface
+type RangeGroup []AnyInterface
 
-type RangeInterface interface {
-	String()
-}
-
-func (*Range) String() {
+type AnyInterface interface {
 }
 
 type (
@@ -219,8 +215,8 @@ func testMarshal() {
 	s1 := "武汉"
 	//s2 := "北京"
 
-	var f, f1 RangeInterface
-	fs := make([]RangeInterface, 0, 2)
+	var f, f1 AnyInterface
+	fs := make([]AnyInterface, 0, 2)
 	f = &Range{
 		Text:  &s1,
 		Value: "wuhan",
@@ -235,7 +231,7 @@ func testMarshal() {
 	fs = append(fs, f1)
 
 	//fs1 := make([]RangeInterface, 0, 2)
-	var c, c1 RangeInterface
+	var c, c1 AnyInterface
 	c = &Cascade{
 		Name:  "计算机",
 		Label: "jisuanji",
