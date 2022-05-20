@@ -187,8 +187,8 @@ type (
 
 	// Range 范围
 	Range struct {
-		Text  string `json:"text"`
-		Value string `json:"value"`
+		Text  *string `json:"text"`
+		Value string  `json:"value"`
 	}
 
 	// Cascade 级联数据
@@ -216,16 +216,18 @@ var Cascades = []*Cascade{
 }
 
 func testMarshal() {
+	s1 := "武汉"
+	//s2 := "北京"
 
 	var f, f1 RangeInterface
 	fs := make([]RangeInterface, 0, 2)
 	f = &Range{
-		Text:  "武汉",
+		Text:  &s1,
 		Value: "wuhan",
 	}
 
 	f1 = &Range{
-		Text:  "北京",
+		//Text:  &s2,
 		Value: "beijing",
 	}
 
@@ -239,9 +241,9 @@ func testMarshal() {
 		Label: "jisuanji",
 		Children: []*Cascade{
 			{
-				Name:     "软件",
-				Label:    "jisuanji",
-				Children: []*Cascade{},
+				Name:  "软件",
+				Label: "jisuanji",
+				//Children: []*Cascade{},
 			},
 		},
 	}
@@ -250,9 +252,9 @@ func testMarshal() {
 		Label: "jisuanji",
 		Children: []*Cascade{
 			{
-				Name:     "内科",
-				Label:    "jisuanji",
-				Children: []*Cascade{},
+				Name:  "内科",
+				Label: "jisuanji",
+				//Children: []*Cascade{},
 			},
 		},
 	}
