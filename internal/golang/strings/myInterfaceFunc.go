@@ -4,8 +4,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"regexp"
+	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 type Getter interface {
@@ -20,6 +23,61 @@ func (f GetterFunc) Get(key string) string {
 
 func GetSourceInfo(getter Getter, key string) string {
 	return getter.Get(key)
+}
+
+const (
+	// 非"中文字母数字下划线"
+	RoleNameRegexPattern = "[^a-zA-Z0-9_\u4e00-\u9fa5]"
+	// 非"中文/全角括号/字母/数字/下划线"
+	OrgNameRegexPattern = "[^a-zA-Z0-9_()\u4e00-\u9fa5\uff08\uff09\u00b7]"
+	NameRegexPattern    = "[^a-zA-Z\u4e00-\u9fa5\u00b7]"
+	EmailRegexPattern   = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$"
+	LocalIpRegexPattern = `\d+\.\d+\.\d+\.\d+`
+	Amount              = "^([1-9]\\d{0,9}|0)(\\.\\d{1,2})?$"
+
+	ChineseNameRegexp      = "^[\u3400-\u4dbf\u4e00-\u9fa5.·]{1,25}$"
+	OverSeaNameRegexp      = "^([\u3400-\u4dbf\u4e00-\u9fa5·]{2,25}|[a-zA-Z·,\\s-]{2,50})$"
+	EnglishNameRegexp      = "^[A-Za-z·\\,\\- ]{1,50}$"
+	TimeFormat             = "2006-01-02 15:04:05"
+	USCCRegexp             = "^[A-Z0-9]{1,18}$"
+	EmailRegexp            = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
+	EnglishCharacterRegexp = "[a-zA-Z]"
+)
+
+var roleNameRegexCompile = regexp.MustCompile(RoleNameRegexPattern)
+var orgNameRegexCompile = regexp.MustCompile(OrgNameRegexPattern)
+var emailRegexCompile = regexp.MustCompile(EmailRegexPattern)
+var localIpRegexCompile = regexp.MustCompile(LocalIpRegexPattern)
+var amountRegexCompile = regexp.MustCompile(Amount)
+var nameRegexCompile = regexp.MustCompile(NameRegexPattern)
+var chineseNameCompile = regexp.MustCompile(ChineseNameRegexp)
+var OverSeaNameCompile = regexp.MustCompile(OverSeaNameRegexp)
+var englishNameCompile = regexp.MustCompile(EnglishNameRegexp)
+var usccRegexp = regexp.MustCompile(USCCRegexp)
+var emailRegexp = regexp.MustCompile(EmailRegexp)
+var englishCharacterRegexp = regexp.MustCompile(EnglishCharacterRegexp)
+
+//判断是否是中文的名字
+func IsChineseName(s string) bool {
+	return chineseNameCompile.MatchString(s)
+}
+
+func IsEnglishName(s string) bool {
+	return englishNameCompile.MatchString(s)
+}
+
+//IsInvalidName 是否是合法姓名
+func IsInvalidName(name string) bool {
+
+	nameLength := utf8.RuneCountInString(name)
+	if nameLength == 0 || nameLength > 50 {
+		return false
+	}
+
+	if !IsChineseName(name) && !IsEnglishName(name) {
+		return false
+	}
+	return true
 }
 
 var innerOpenIds = []string{
@@ -121,7 +179,31 @@ channel = 'WEIXINAPP' and o.open_id in ('%s')) order by u.created_on desc limit 
 	}
 	//	fmt.Println(If(ans, "", mydb.otherFiled).(string))
 
-	testMarshal()
+	//testMarshal()
+
+	c := CouponActivityData{
+		CouponSerialId: "yDR8iUUgygq20spnUyxgEv8BguCqkW73",
+	}
+	bytes, _ := json.Marshal(c)
+	fmt.Println(string(bytes))
+
+	fmt.Println(IsInvalidName("向文秀"))
+
+	fmt.Println(len(testSlice()), cap(testSlice()))
+
+}
+
+func testSlice() []*CouponActivityData {
+
+	var datas []*CouponActivityData
+	for i := 0; i < 10; i++ {
+		d := &CouponActivityData{
+			CouponSerialId: strconv.Itoa(i),
+		}
+		datas = append(datas, d)
+	}
+
+	return datas[:5]
 }
 
 func GetInfoFromRedis(key string) string {
@@ -209,6 +291,11 @@ var Cascades = []*Cascade{
 			},
 		},
 	},
+}
+
+// CouponActivityData 礼券活动意图数据
+type CouponActivityData struct {
+	CouponSerialId string // 代金券编号
 }
 
 func testMarshal() {
