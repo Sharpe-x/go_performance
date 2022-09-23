@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/jinzhu/copier"
 	"reflect"
@@ -90,6 +91,13 @@ type UrchinTrackingModuleInfo struct {
 	Term     string `protobuf:"bytes,5,opt,name=term,proto3" json:"term,omitempty"`
 }
 
+type requestLimit struct {
+	IpAndMobileLimitByMinute   int64 `json:"MinuteLimit"`
+	IpAndMobileLimitByHalfHour int64 `json:"HalfHourLimit"`
+	IpAndMobileLimitByDay      int64 `json:"DayLimit"`
+	IpLimitByDay               int64 `json:"IpDayLimit"`
+}
+
 func main() {
 	utmInfo := &UrchinTrackingModuleInfo{
 		Source: "source",
@@ -169,5 +177,15 @@ func main() {
 	for _, answer := range newRequestOperation.Answers {
 		fmt.Printf("%#v\n", *answer)
 	}
+	fmt.Println("===============")
 
+	limit := requestLimit{
+		IpAndMobileLimitByMinute:   5,
+		IpAndMobileLimitByHalfHour: 25,
+		IpAndMobileLimitByDay:      50,
+		IpLimitByDay:               100,
+	}
+
+	strBytes, _ := json.Marshal(&limit)
+	fmt.Println(string(strBytes))
 }
