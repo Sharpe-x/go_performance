@@ -188,4 +188,8 @@ func main() {
 
 	strBytes, _ := json.Marshal(&limit)
 	fmt.Println(string(strBytes))
+
+	groupApproverIds := make([]int64, 0, 3)
+
+	fmt.Println(len(groupApproverIds))
 }
