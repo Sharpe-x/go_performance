@@ -1,9 +1,56 @@
 # github.com/bwmarrin/snowflake v0.3.0
 ## explicit
 github.com/bwmarrin/snowflake
+# github.com/cockroachdb/errors v1.9.0
+## explicit; go 1.13
+github.com/cockroachdb/errors
+github.com/cockroachdb/errors/assert
+github.com/cockroachdb/errors/barriers
+github.com/cockroachdb/errors/contexttags
+github.com/cockroachdb/errors/domains
+github.com/cockroachdb/errors/errbase
+github.com/cockroachdb/errors/errorspb
+github.com/cockroachdb/errors/errutil
+github.com/cockroachdb/errors/hintdetail
+github.com/cockroachdb/errors/issuelink
+github.com/cockroachdb/errors/markers
+github.com/cockroachdb/errors/report
+github.com/cockroachdb/errors/safedetails
+github.com/cockroachdb/errors/secondary
+github.com/cockroachdb/errors/stdstrings
+github.com/cockroachdb/errors/telemetrykeys
+github.com/cockroachdb/errors/withstack
+# github.com/cockroachdb/logtags v0.0.0-20211118104740-dabe8e521a4f
+## explicit; go 1.16
+github.com/cockroachdb/logtags
+# github.com/cockroachdb/redact v1.1.3
+## explicit; go 1.14
+github.com/cockroachdb/redact
+github.com/cockroachdb/redact/builder
+github.com/cockroachdb/redact/interfaces
+github.com/cockroachdb/redact/internal/buffer
+github.com/cockroachdb/redact/internal/escape
+github.com/cockroachdb/redact/internal/fmtforward
+github.com/cockroachdb/redact/internal/markers
+github.com/cockroachdb/redact/internal/redact
+github.com/cockroachdb/redact/internal/rfmt
+github.com/cockroachdb/redact/internal/rfmt/fmtsort
 # github.com/docker/docker v20.10.12+incompatible
 ## explicit
 github.com/docker/docker/pkg/pubsub
+# github.com/getsentry/sentry-go v0.13.0
+## explicit; go 1.17
+github.com/getsentry/sentry-go
+github.com/getsentry/sentry-go/internal/crypto/randutil
+github.com/getsentry/sentry-go/internal/debug
+github.com/getsentry/sentry-go/internal/ratelimit
+# github.com/gogo/protobuf v1.3.2
+## explicit; go 1.15
+github.com/gogo/protobuf/gogoproto
+github.com/gogo/protobuf/proto
+github.com/gogo/protobuf/protoc-gen-gogo/descriptor
+github.com/gogo/protobuf/sortkeys
+github.com/gogo/protobuf/types
 # github.com/golang/protobuf v1.5.2
 ## explicit; go 1.9
 github.com/golang/protobuf/descriptor
@@ -23,6 +70,12 @@ github.com/grpc-ecosystem/grpc-gateway/utilities
 # github.com/jinzhu/copier v0.3.5
 ## explicit; go 1.13
 github.com/jinzhu/copier
+# github.com/kr/pretty v0.3.0
+## explicit; go 1.12
+github.com/kr/pretty
+# github.com/kr/text v0.2.0
+## explicit
+github.com/kr/text
 # github.com/mozillazg/go-pinyin v0.19.0
 ## explicit; go 1.11
 github.com/mozillazg/go-pinyin
@@ -35,6 +88,17 @@ github.com/pkg/profile
 # github.com/robfig/cron/v3 v3.0.1
 ## explicit; go 1.12
 github.com/robfig/cron/v3
+# github.com/rogpeppe/go-internal v1.9.0
+## explicit; go 1.17
+github.com/rogpeppe/go-internal/fmtsort
+# github.com/sourcegraph/conc v0.2.0
+## explicit; go 1.19
+github.com/sourcegraph/conc
+github.com/sourcegraph/conc/panics
+github.com/sourcegraph/conc/pool
+# github.com/sourcegraph/sourcegraph/lib v0.0.0-20221216004406-749998a2ac74
+## explicit; go 1.19
+github.com/sourcegraph/sourcegraph/lib/errors
 # github.com/tidwall/gjson v1.14.4
 ## explicit; go 1.12
 github.com/tidwall/gjson
@@ -47,8 +111,8 @@ github.com/tidwall/pretty
 # golang.org/x/exp v0.0.0-20230108222341-4b8118a2686a
 ## explicit; go 1.18
 golang.org/x/exp/constraints
-# golang.org/x/net v0.0.0-20200822124328-c89045814202
-## explicit; go 1.11
+# golang.org/x/net v0.0.0-20220526153639-5463443f8c37
+## explicit; go 1.17
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
 golang.org/x/net/http2/hpack
@@ -57,20 +121,21 @@ golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
 # golang.org/x/sys v0.1.0
 ## explicit; go 1.17
+golang.org/x/sys/execabs
 golang.org/x/sys/unix
-# golang.org/x/text v0.3.0
-## explicit
+# golang.org/x/text v0.3.7
+## explicit; go 1.17
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013
-## explicit; go 1.11
+# google.golang.org/genproto v0.0.0-20220414192740-2d67ff6cf2b4
+## explicit; go 1.15
 google.golang.org/genproto/googleapis/api/annotations
 google.golang.org/genproto/googleapis/api/httpbody
 google.golang.org/genproto/googleapis/rpc/status
 google.golang.org/genproto/protobuf/field_mask
-# google.golang.org/grpc v1.44.0
+# google.golang.org/grpc v1.45.0
 ## explicit; go 1.14
 google.golang.org/grpc
 google.golang.org/grpc/attributes
@@ -117,8 +182,8 @@ google.golang.org/grpc/serviceconfig
 google.golang.org/grpc/stats
 google.golang.org/grpc/status
 google.golang.org/grpc/tap
-# google.golang.org/protobuf v1.27.1
-## explicit; go 1.9
+# google.golang.org/protobuf v1.28.0
+## explicit; go 1.11
 google.golang.org/protobuf/encoding/protojson
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
