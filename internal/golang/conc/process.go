@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/sourcegraph/conc"
 	"github.com/sourcegraph/conc/pool"
-
+	"github.com/sourcegraph/conc/stream"
 	"runtime/debug"
 	"time"
 )
@@ -44,7 +44,9 @@ func main() {
 
 	time.Sleep(time.Minute * 2)*/
 
-	processWithResult()
+	//processWithResult()
+
+	ExampleStream()
 }
 
 func conRun() {
@@ -106,4 +108,27 @@ func handle(e int) {
 		panic(fmt.Sprintf("panic for test %d", e))
 	}
 	fmt.Printf("handle %d end\n", e)
+}
+
+func ExampleStream() {
+	times := []int{20, 52, 16, 45, 4, 80}
+
+	s := stream.New()
+	for _, millis := range times {
+		dur := time.Duration(millis) * time.Millisecond
+		s.Go(func() stream.Callback {
+			time.Sleep(dur)
+			// This will print in the order the tasks were submitted
+			return func() { fmt.Println(dur) }
+		})
+	}
+	s.Wait()
+
+	// Output:
+	// 20ms
+	// 52ms
+	// 16ms
+	// 45ms
+	// 4ms
+	// 80ms
 }
