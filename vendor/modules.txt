@@ -96,6 +96,7 @@ github.com/rogpeppe/go-internal/fmtsort
 github.com/sourcegraph/conc
 github.com/sourcegraph/conc/panics
 github.com/sourcegraph/conc/pool
+github.com/sourcegraph/conc/stream
 # github.com/sourcegraph/sourcegraph/lib v0.0.0-20221216004406-749998a2ac74
 ## explicit; go 1.19
 github.com/sourcegraph/sourcegraph/lib/errors
